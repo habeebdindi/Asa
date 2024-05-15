@@ -1,6 +1,5 @@
 Pillow
 streamlit
-io
 audiorecorder
 requests
 cohere
