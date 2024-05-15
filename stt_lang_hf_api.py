@@ -21,7 +21,7 @@ def transcribe_yoruba(filename):
 
             if 'error' in response_data:
                 print("An error occurred:", response_data['error'])
-                print("Retrying in 10 seconds...")
+                print("Retrying in 5 seconds...")
                 time.sleep(5)
             else:
                 return response_data
@@ -60,7 +60,7 @@ def transcribe_english(filename):
 
             if 'error' in response_data:
                 print("An error occurred:", response_data['error'])
-                print("Retrying in 10 seconds...")
+                print("Retrying in 5 seconds...")
                 time.sleep(5)
             else:
                 return response_data
