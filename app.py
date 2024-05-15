@@ -93,7 +93,7 @@ if st.button("Generate Art"):
         translate = st.text_input("Translation", translation)
 
         if lang == "Yoruba":
-            image_bytes = generate_image(translation)
+            image_bytes = openai_image(translation)
         else:
             image_bytes = openai_image(transcript)
 
