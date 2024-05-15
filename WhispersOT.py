@@ -17,7 +17,6 @@ def stream_data(data):
 
 def generate(lang, uploaded_file=None, audio=None):
     if lang == "Yoruba" and uploaded_file is not None:
-        uploaded_file.seek(0)
         transcript = transcribe_yoruba(uploaded_file)
         transcript = transcript["text"].strip()
         translation = translate_yoruba(transcript)
@@ -34,6 +33,7 @@ def generate(lang, uploaded_file=None, audio=None):
 
     return transcript, translation
 
+st.sidebar.success("Select an AI above")
 
 st.markdown(
     "<h1 style='text-align: center; #A86823: ; padding-top: 0px; margin-bottom: 2px;'>Whispers of Tradition</h1>",
@@ -58,7 +58,6 @@ if option == "Upload":
         filename = os.path.join("./uploaded_audio/", uploaded_file.name)
         with open(filename, "wb") as f:
             f.write(uploaded_file.read())
-        print(filename)
         upload = True
     else:
         upload = False
