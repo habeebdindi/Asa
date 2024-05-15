@@ -3,7 +3,6 @@ import os
 import streamlit as st
 from PIL import Image
 from audiorecorder import audiorecorder
-import base64
 import requests
 import cohere
 import WhispersOT
