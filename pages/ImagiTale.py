@@ -7,8 +7,14 @@ from audiorecorder import audiorecorder
 import requests
 import cohere
 import WhispersOT
-#from Asa.stt_lang_hf_api import openai_transcribe, transcribe_yoruba, transcribe_english
 
+
+hide_streamlit_style = """
+            <style>
+            footer {visibility: hidden;}
+            </style>
+            """
+st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
 api_key = os.environ.get("OPENAI_API_KEY")
 

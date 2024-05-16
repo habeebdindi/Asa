@@ -9,6 +9,12 @@ from cohere_translate import translate_yoruba, translate_english
 from openai_translate import openai_translate_yoruba
 from stt_lang_hf_api import transcribe_yoruba, transcribe_english, openai_transcribe
 
+hide_streamlit_style = """
+            <style>
+            footer {visibility: hidden;}
+            </style>
+            """
+st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
 def stream_data(data):
     for word in data.split(" "):
