@@ -152,7 +152,9 @@ if st.button("Generate", key="but_1_ImagiTale"):
             response = vision(text=prompt_text, img=filename)
 #    st.success('Response generated!')
     st.success(response)
-
+st.text("")
+st.text("")
+st.text("")
 feedback = st.text_area("How can we improve, comment, thoughts?", height=40, key="text-ImagiTale")
 if st.button("Submit", key="but_2_ImagiTale"):
     st.write("Thank you for your submission, we appreciate your feedback")

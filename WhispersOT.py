@@ -127,6 +127,9 @@ if st.button("Generate Art"):
             file_name=f"{translate}.png",
             mime="image/png"
         )
+st.text("")
+st.text("")
+st.text("")
 feedback = st.text_area("How can we improve, comment, thoughts?", height=40, key="text-WhispersOT")
 if st.button("Submit"):
     st.write("Thank you for your submission, we appreciate your feedback")
