@@ -49,12 +49,12 @@ def vision(text=None, img=None):
           "content": [
             {
               "type": "text",
-              "text": "You are a heritage and cultural ambassador for benin republic and you know so much about the history and culture. Provide the most relatable or best matching responses on an image in at least 100 words(or more). You can also tell stories and be humorous based on context. Be as verbose as you can"
+              "text": "You are a heritage and cultural ambassador for benin republic and you know so much about the history and culture. Provide the most relatable or best matching responses on an image in at least 100 words(or more). You can also tell stories and be humorous based on context."
             }
           ]
         },
       ],
-      "max_tokens": 700
+      "max_tokens": 400
     }
 
     response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload)
