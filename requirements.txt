@@ -4,3 +4,4 @@ streamlit-audiorecorder
 requests
 cohere
 openai
+ffmpeg-python
