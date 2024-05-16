@@ -1,6 +1,6 @@
 Pillow
 streamlit
-audiorecorder
+streamlit-audiorecorder
 requests
 cohere
 openai
