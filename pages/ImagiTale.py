@@ -1,20 +1,10 @@
-from openai import OpenAI
 import base64
 import os
 import streamlit as st
 from PIL import Image
 from audiorecorder import audiorecorder
 import requests
-import cohere
 import WhispersOT
-
-
-hide_streamlit_style = """
-            <style>
-            footer {visibility: hidden;}
-            </style>
-            """
-st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
 api_key = os.environ.get("OPENAI_API_KEY")
 
@@ -59,7 +49,7 @@ def vision(text=None, img=None):
           "content": [
             {
               "type": "text",
-              "text": "You are a heritage and cultural ambassador for benin republic and you know so much about the history and culture. Provide the most relatable responses on an image in at least than 100 words. You can also tell stories and be humorous based on context."
+              "text": "You are a heritage and cultural ambassador for benin republic and you know so much about the history and culture. Provide the most relatable or best matching responses on an image in at least 100 words(or more). You can also tell stories and be humorous based on context. Be as verbose as you can"
             }
           ]
         },
@@ -131,7 +121,7 @@ if prompt_option == "Type":
 col1, col2 = st.columns([0.7, 0.3])
 with col2:
     lang = st.radio(
-        "Select language",
+        "Select prompt language",
         ["English", "Yoruba"],
         horizontal=True,
     )
@@ -156,8 +146,11 @@ if st.button("Generate", key="but_1_ImagiTale"):
                 response = vision(text=transcript, img=filename)
         elif text:
             response = vision(text=prompt_text, img=filename)
-#    st.success('Response generated!')
     st.success(response)
+    WhispersOT.delete_file(filename)
+    if speech:
+        WhispersOT.delete_file(audio_file)
+
 st.text("")
 st.text("")
 st.text("")

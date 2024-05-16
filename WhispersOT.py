@@ -1,20 +1,49 @@
+import glob
+import uuid
 import os
 import streamlit as st
-import uuid
 import time
-from io import StringIO, BytesIO
+import base64
+import requests
+import io
+from PIL import Image
 from audiorecorder import audiorecorder
 from tti_stability import generate_image, openai_image
 from cohere_translate import translate_yoruba, translate_english
 from openai_translate import openai_translate_yoruba
 from stt_lang_hf_api import transcribe_yoruba, transcribe_english, openai_transcribe
 
-hide_streamlit_style = """
-            <style>
-            footer {visibility: hidden;}
-            </style>
-            """
-st.markdown(hide_streamlit_style, unsafe_allow_html=True)
+def delete_files(pattern):
+    files = glob.glob(pattern)
+    for file_path in files:
+        try:
+            os.remove(file_path)
+            print(f"File '{file_path}' deleted successfully.")
+        except OSError as e:
+            print(f"Error: {file_path} : {e.strerror}")
+delete_files("./generated_image/*.webp")
+delete_files("./generated_image/*.png")
+
+def delete_file(file_path):
+    try:
+        os.remove(file_path)
+        print(f"File '{file_path}' deleted successfully.")
+    except OSError as e:
+        print(f"Error: {file_path} : {e.strerror}")
+
+def save_image(url, file_name):
+    response = requests.get(url)
+    if response.status_code == 200:
+        image = Image.open(io.BytesIO(response.content))
+        image.save(file_name, "WEBP")
+        return True
+    return False
+
+def convert_webp_to_png(input_webp_path, output_png_path):
+    with Image.open(input_webp_path) as img:
+        img.save(output_png_path, "PNG")
+        return True
+    return False
 
 def stream_data(data):
     for word in data.split(" "):
@@ -119,20 +148,33 @@ if st.button("Generate Art"):
         translate = st.text_input("Translation", translation)
 
         if lang == "Yoruba":
-            image_bytes = openai_image(translation)
+            image_url = openai_image(translation)
         else:
-            image_bytes = openai_image(transcript)
-
+            image_url = openai_image(transcript)
+#        image_url = "https://www.gstatic.com/webp/gallery/3.webp"
     st.success('Art generation complete!')
-    st.image(image_bytes, use_column_width=True, caption=translate)
-    col3, col4 = st.columns([0.9, 0.1])
-    with col4:
-        btn = st.download_button(
-            label="Save",
-            data=image_bytes,
-            file_name=f"{translate}.png",
-            mime="image/png"
-        )
+    st.image(image_url, use_column_width=True)
+    img_id = str(uuid.uuid4()).split('-')[4]
+    webp_path = f"./generated_image/{img_id}.webp"
+    if save_image(image_url, webp_path):
+        output_png_path=f"./generated_image/{img_id}.png"
+        if convert_webp_to_png(webp_path, output_png_path):
+            col3, col4 = st.columns([0.9, 0.1])
+            with open(output_png_path, 'rb') as f:
+                png_data = f.read()
+            with col4:
+                print(f"{output_png_path}")
+                save = st.download_button(
+                    label="Save",
+                    data=png_data,
+                    file_name=f"{translate}.png",
+                    mime="image/png"
+                )
+    if upload:
+        delete_file(filename)
+    if record:
+        delete_file(audio_file)
+
 st.text("")
 st.text("")
 st.text("")
