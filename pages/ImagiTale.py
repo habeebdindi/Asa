@@ -1,4 +1,5 @@
 from openai import OpenAI
+import base64
 import os
 import streamlit as st
 from PIL import Image
