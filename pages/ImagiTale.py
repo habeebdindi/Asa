@@ -147,9 +147,9 @@ if st.button("Generate", key="but_1_ImagiTale"):
         elif text:
             response = vision(text=prompt_text, img=filename)
     st.success(response)
-    WhispersOT.delete_file(filename)
-    if speech:
-        WhispersOT.delete_file(audio_file)
+#    WhispersOT.delete_file(filename)
+#    if speech:
+#        WhispersOT.delete_file(audio_file)
 
 st.text("")
 st.text("")
