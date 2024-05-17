@@ -56,14 +56,14 @@ def generate(lang, uploaded_file=None, audio=None):
         transcript = transcript["text"].strip()
         translation = openai_translate_yoruba("Yoruba", "English", transcript)
     elif lang == "Yoruba" and uploaded_file is None:
-        transcript = transcribe_yoruba("./audio_files/{}.wav".format(lang))
+        transcript = transcribe_yoruba(audio)
         transcript = transcript["text"].strip()
         translation = openai_translate_yoruba("Yoruba", "English", transcript)
     elif lang == "English" and uploaded_file is not None:
         transcript = openai_transcribe(uploaded_file)
         translation = translate_english(transcript)
     else:
-        transcript = openai_transcribe("./audio_files/{}.wav".format(lang))
+        transcript = openai_transcribe(audio)
         translation = translate_english(transcript)
 
     return transcript, translation
