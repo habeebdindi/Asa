@@ -54,7 +54,7 @@ def vision(text=None, img=None):
           ]
         },
       ],
-      "max_tokens": 400
+      "max_tokens": 500
     }
 
     response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload)
