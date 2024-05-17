@@ -4,7 +4,9 @@ import streamlit as st
 from PIL import Image
 from audiorecorder import audiorecorder
 import requests
-import WhispersOT
+import openai_translate
+import cohere_translate
+import stt_lang_hf_api
 
 api_key = os.environ.get("OPENAI_API_KEY")
 
@@ -139,17 +141,24 @@ if prompt_option == "Speak":
 if st.button("Generate", key="but_1_ImagiTale"):
     with st.spinner("Generating response..."):
         if speech:
-            transcript, translation = WhispersOT.generate(lang, audio=audio_file)
             if lang == "Yoruba":
-                response = vision(text=translation, img=filename)
+                transcript = stt_lang_hf_api.transcribe_yoruba(audio_file)
+                transcript = transcript["text"].strip()
             else:
-                response = vision(text=transcript, img=filename)
+                transcript = stt_lang_hf_api.openai_transcribe(audio_file)
+            response = vision(text=transcript, img=filename)
         elif text:
             response = vision(text=prompt_text, img=filename)
     st.success(response)
-#    WhispersOT.delete_file(filename)
-#    if speech:
-#        WhispersOT.delete_file(audio_file)
+
+    with st.status("Translating", expanded=True) as status:
+        if lang == "Yoruba":
+            translation = openai_translate.openai_translate_yoruba("Yoruba", "English", response)
+        else:
+            translation = openai_translate.openai_translate_yoruba("English", "Yoruba", response)
+        st.info(translation)
+        status.update(label="Translated!", state="complete", expanded=False)
+
 
 st.text("")
 st.text("")
