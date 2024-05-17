@@ -11,9 +11,12 @@ def openai_translate_yoruba(src: str, dest:str, txt:str):
     """
     client = OpenAI()
     response = client.chat.completions.create(
-        model="gpt-4",
+        model="gpt-3.5-turbo",
         messages=[
-            {"role": "system", "content": "You are a yoruba assistant who understands the language very well. You also know english. Therefore when you are spoken to in yoruba you can translate to english and when you are spoken to in English you can translate to yoruba. Put signs where necessary when translating to yoruba"},
+            {
+                "role": "system",
+                "content": "You are a yoruba assistant who understands the language very well. You also know english. Therefore when you are spoken to in yoruba you can translate to english and when you are spoken to in English you can translate to yoruba. Put signs where necessary when translating to yoruba and do not include the prompt in your response."
+             },
             {"role": "user", "content": f"Translate from {src} to {dest}: {txt}"}
         ]
     )
