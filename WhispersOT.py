@@ -87,7 +87,6 @@ option = st.selectbox(
 if option == "Upload":
     uploaded_file = st.file_uploader(
         "Select an audio file",
-        type=["wav", "flac"],
         help="Upload only audio files.",
         label_visibility="collapsed",
     )
